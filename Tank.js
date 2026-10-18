@@ -18,8 +18,8 @@ function createFish() {
 
     img.src = FISH_IMAGES[Math.floor(Math.random() * 5)];
 
-    let x = Math.random() * (tankW - 150);
-    let y = Math.random() * (tankH - 100);
+    let x = Math.random() * (TANK_W - 150);
+    let y = Math.random() * (TANK_H - 100);
 
     let vx = Math.random() < 0.5 ? 1 : -1;
     let vy = Math.random() < 0.5 ? (Math.random() < 0.5 ? 1 : -1) : 0;
@@ -86,16 +86,16 @@ function animate() {
             f.x = 0;
             f.vx = 1;
         }
-        if (f.x + 150 > tankW) {
-            f.x = tankW - 150;
+        if (f.x + 150 > TANK_W) {
+            f.x = TANK_W - 150;
             f.vx = -1;
         }
         if (f.y < 0) {
             f.y = 0;
             f.vy = Math.abs(f.vy);
         }
-        if (f.y + 100 > tankH) {
-            f.y = tankH - 100;
+        if (f.y + 100 > TANK_H) {
+            f.y = TANK_H - 100;
             f.vy = -Math.abs(f.vy);
         }
 

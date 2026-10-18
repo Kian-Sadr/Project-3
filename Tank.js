@@ -12,3 +12,79 @@ const FISH_IMAGES = [
     "fish5.png"
 ];
 
+function createFish() {
+    const img = document.createElement("img");
+    img.className = "fish";
+
+    img.src = fishImages[Math.floor(Math.random() * 5)];
+
+    let x = Math.random() * (tankW - 150);
+    let y = Math.random() * (tankH - 100);
+
+    let vx = Math.random() < 0.5 ? 1 : -1;
+    let vy = Math.random() < 0.5 ? (Math.random() < 0.5 ? 1 : -1) : 0;
+
+    let normalSpeed = 2;
+    let speed = normalSpeed;
+    let boosted = false;
+    let boostTimer = null;
+
+    img.style.left = x + "px";
+    img.style.top = y + "px";
+
+    function faceDirection() {
+        img.style.transform = vx < 0 ? "scaleX(-1)" : "scaleX(1)";
+    }
+    faceDirection();
+
+    function scheduleDirectionChange() {
+        const delay = (Math.floor(Math.random() * 6 + 2)) * 1000;
+        setTimeout(() => {
+            if (Math.random() < 0.5) {
+                vx = Math.random() < 0.5 ? 1 : -1;
+                vy = Math.random() < 0.5 ? (Math.random() < 0.5 ? 1 : -1) : 0;
+                faceDirection();
+            }
+            scheduleDirectionChange();
+        }, delay);
+    }
+    scheduleDirectionChange();
+
+    fishList.push({ img, x, y, vx, vy, speed, normalSpeed, boosted });
+    tank.appendChild(img);
+}
+
+for (let i = 0; i < fishCount; i++) {
+    createFish();
+}
+
+function animate() {
+    fishList.forEach(f => {
+        f.x += f.vx * f.speed;
+        f.y += f.vy * f.speed;
+
+        if (f.x < 0) {
+            f.x = 0;
+            f.vx = 1;
+        }
+        if (f.x + 150 > tankW) {
+            f.x = tankW - 150;
+            f.vx = -1;
+        }
+        if (f.y < 0) {
+            f.y = 0;
+            f.vy = Math.abs(f.vy);
+        }
+        if (f.y + 100 > tankH) {
+            f.y = tankH - 100;
+            f.vy = -Math.abs(f.vy);
+        }
+
+        f.img.style.left = f.x + "px";
+        f.img.style.top = f.y + "px";
+    });
+
+    requestAnimationFrame(animate);
+}
+
+animate();

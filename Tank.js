@@ -3,6 +3,7 @@ const NUM_FISH = 7;
 const TANK = document.getElementById("tank");
 const TANK_W = TANK.clientWidth;
 const TANK_H = TANK.clientHeight;
+const FISH_LIST = [];
 
 const FISH_IMAGES = [
     "fish1.png",
@@ -68,7 +69,7 @@ function createFish() {
     }
     scheduleDirectionChange();
 
-    fishList.push({ img, x, y, vx, vy, speed, normalSpeed, boosted });
+    FISH_LIST.push({ img, x, y, vx, vy, speed, normalSpeed, boosted });
     TANK.appendChild(img);
 }
 
@@ -78,7 +79,7 @@ for (let i = 0; i < NUM_FISH; i++) {
 }
 
 function animate() {
-    fishList.forEach(f => {
+    FISH_LIST.forEach(f => {
         f.x += f.vx * f.speed;
         f.y += f.vy * f.speed;
 

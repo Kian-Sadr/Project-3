@@ -72,7 +72,7 @@ function createFish() {
     tank.appendChild(img);
 }
 
-for (let i = 0; i < fishCount; i++) {
+for (let i = 0; i < NUM_FISH; i++) {
     createFish();
     console.log("Fish created");
 }

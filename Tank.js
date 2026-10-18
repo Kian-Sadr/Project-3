@@ -26,7 +26,7 @@ function createFish() {
 
     let normalSpeed = 2;
     let speed = normalSpeed;
-    let boosted = false;
+
     let boostTimer = null;
 
     img.style.left = x + "px";

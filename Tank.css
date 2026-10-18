@@ -1,1 +1,23 @@
 /*CSS file for Fish Tank*/
+body {
+    padding: 20px;
+}
+
+#tank {
+    position: relative;
+    width: 800px;
+    height: 600px;
+    margin: 0 auto;
+    border: 5px solid #fff;
+
+    background: linear-gradient(135deg, blue, aqua);
+    overflow: hidden;
+}
+
+.fish {
+    position: absolute;
+    width: 150px;
+    height: 100px;
+    cursor: pointer;
+    user-select: none;
+}

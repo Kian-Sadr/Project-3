@@ -26,7 +26,7 @@ function createFish() {
 
     let normalSpeed = 2;
     let speed = normalSpeed;
-
+    let boosted = false;
     let boostTimer = null;
 
     img.style.left = x + "px";
@@ -36,6 +36,24 @@ function createFish() {
         img.style.transform = vx < 0 ? "scaleX(-1)" : "scaleX(1)";
     }
     faceDirection();
+
+    img.addEventListener("click", () => {
+        if (!boosted) {
+            boosted = true;
+            speed = normalSpeed * 3;
+
+            boostTimer = setTimeout(() => {
+                speed = normalSpeed;
+                boosted = false;
+            }, 3000);
+        } else {
+            clearTimeout(boostTimer);
+            boostTimer = setTimeout(() => {
+                speed = normalSpeed;
+                boosted = false;
+            }, 3000);
+        }
+    });
 
     function scheduleDirectionChange() {
         const delay = (Math.floor(Math.random() * 6 + 2)) * 1000;
@@ -50,7 +68,7 @@ function createFish() {
     }
     scheduleDirectionChange();
 
-    fishList.push({ img, x, y, vx, vy, speed, normalSpeed });
+    fishList.push({ img, x, y, vx, vy, speed, normalSpeed, boosted });
     tank.appendChild(img);
 }
 

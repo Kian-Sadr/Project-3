@@ -74,6 +74,7 @@ function createFish() {
 
 for (let i = 0; i < fishCount; i++) {
     createFish();
+    console.log("Fish created");
 }
 
 function animate() {

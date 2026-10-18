@@ -50,7 +50,7 @@ function createFish() {
     }
     scheduleDirectionChange();
 
-    fishList.push({ img, x, y, vx, vy, speed, normalSpeed, boosted });
+    fishList.push({ img, x, y, vx, vy, speed, normalSpeed });
     tank.appendChild(img);
 }
 

@@ -16,7 +16,7 @@ function createFish() {
     const img = document.createElement("img");
     img.className = "fish";
 
-    img.src = fishImages[Math.floor(Math.random() * 5)];
+    img.src = FISH_IMAGES[Math.floor(Math.random() * 5)];
 
     let x = Math.random() * (tankW - 150);
     let y = Math.random() * (tankH - 100);

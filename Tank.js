@@ -69,7 +69,7 @@ function createFish() {
     scheduleDirectionChange();
 
     fishList.push({ img, x, y, vx, vy, speed, normalSpeed, boosted });
-    tank.appendChild(img);
+    TANK.appendChild(img);
 }
 
 for (let i = 0; i < NUM_FISH; i++) {

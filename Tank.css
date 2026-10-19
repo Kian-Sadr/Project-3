@@ -15,6 +15,11 @@ h1 {
     border: 15px solid black;
 
     background: linear-gradient(135deg, blue, aqua);
+
+
+    /*Had to google this one
+    apparently it checks if content in the tank crosses over and just hides that content AKA fish (at least until they move back in line)
+    */
     overflow: hidden;
 }
 

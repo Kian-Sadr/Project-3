@@ -1,4 +1,4 @@
-//JS page for Fish Tank
+//JS file for Fish Tank
 const NUM_FISH = 7;
 const TANK = document.getElementById("tank");
 const TANK_W = TANK.clientWidth;
@@ -48,7 +48,7 @@ function createFish() {
     img.style.left = fish.x + "px";
     img.style.top = fish.y + "px";
 
-    // CLICK → SPEED BOOST
+    // NEED 4 SPEED (trademarked probably lmao)
     img.addEventListener("click", () => {
         if (!fish.boosted) {
             fish.boosted = true;
@@ -69,21 +69,21 @@ function createFish() {
         }
     });
 
-    // RANDOM DIRECTION CHANGE (2–8 seconds)
+    // RANDOM DIRECTION CHANGE
     function scheduleDirectionChange() {
         const delay = (Math.floor(Math.random() * 6 + 2)) * 1000;
 
         setTimeout(() => {
             if (Math.random() < 0.5) {
 
-                // new vx
+                // new x velocity
                 if (Math.random() < 0.5) {
                     fish.vx = 1;
                 } else {
                     fish.vx = -1;
                 }
 
-                // new vy
+                // new y velocity
                 if (Math.random() < 0.5) {
                     fish.vy = Math.random() < 0.5 ? 1 : -1;
                 } else {

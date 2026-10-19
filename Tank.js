@@ -19,89 +19,143 @@ function createFish() {
 
     img.src = FISH_IMAGES[Math.floor(Math.random() * FISH_IMAGES.length)];
 
-    let x = Math.random() * (TANK_W - 150);
-    let y = Math.random() * (TANK_H - 100);
+    const fish = {
+        img: img,
+        x: Math.random() * (TANK_W - 150),
+        y: Math.random() * (TANK_H - 100),
+        vx: 1,
+        vy: 0,
+        normalSpeed: 2,
+        speed: 2,
+        boosted: false,
+        boostTimer: null
+    };
 
-    let vx = Math.random() < 0.5 ? 1 : -1;
-    let vy = Math.random() < 0.5 ? (Math.random() < 0.5 ? 1 : -1) : 0;
+    if (Math.random() < 0.5) {
+        fish.vx = -1;
+    } else {
+        fish.vx = 1;
+    }
 
-    let normalSpeed = 2;
-    let speed = normalSpeed;
-    let boosted = false;
-    let boostTimer = null;
-
-    img.style.left = x + "px";
-    img.style.top = y + "px";
+    if (Math.random() < 0.5) {
+        if (Math.random() < 0.5) {
+            fish.vy = 1;
+        } else {
+            fish.vy = -1;
+        }
+    } else {
+        fish.vy = 0;
+    }
 
     function faceDirection() {
-        img.style.transform = vx < 0 ? "scaleX(-1)" : "scaleX(1)";
+        if (fish.vx < 0) {
+            fish.img.style.transform = "scaleX(-1)";
+        } else {
+            fish.img.style.transform = "scaleX(1)";
+        }
     }
+
+    function updatePosition() {
+        fish.img.style.left = fish.x + "px";
+        fish.img.style.top = fish.y + "px";
+    }
+
+    updatePosition();
     faceDirection();
 
     img.addEventListener("click", () => {
-        if (!boosted) {
-            boosted = true;
-            speed = normalSpeed * 3;
+        if (!fish.boosted) {
+            fish.boosted = true;
+            fish.speed = fish.normalSpeed * 3;
 
-            boostTimer = setTimeout(() => {
-                speed = normalSpeed;
-                boosted = false;
+            fish.boostTimer = setTimeout(() => {
+                fish.speed = fish.normalSpeed;
+                fish.boosted = false;
+                fish.boostTimer = null;
             }, 3000);
         } else {
-            clearTimeout(boostTimer);
-            boostTimer = setTimeout(() => {
-                speed = normalSpeed;
-                boosted = false;
+            clearTimeout(fish.boostTimer);
+            fish.boostTimer = setTimeout(() => {
+                fish.speed = fish.normalSpeed;
+                fish.boosted = false;
+                fish.boostTimer = null;
             }, 3000);
         }
     });
 
     function scheduleDirectionChange() {
         const delay = (Math.floor(Math.random() * 6 + 2)) * 1000;
+
         setTimeout(() => {
             if (Math.random() < 0.5) {
-                vx = Math.random() < 0.5 ? 1 : -1;
-                vy = Math.random() < 0.5 ? (Math.random() < 0.5 ? 1 : -1) : 0;
+
+                if (Math.random() < 0.5) {
+                    fish.vx = 1;
+                } else {
+                    fish.vx = -1;
+                }
+
+                if (Math.random() < 0.5) {
+                    if (Math.random() < 0.5) {
+                        fish.vy = 1;
+                    } else {
+                        fish.vy = -1;
+                    }
+                } else {
+                    fish.vy = 0;
+                }
+
                 faceDirection();
             }
+
             scheduleDirectionChange();
         }, delay);
     }
+
     scheduleDirectionChange();
 
-    FISH_LIST.push({ img, x, y, vx, vy, speed, normalSpeed, boosted });
+    FISH_LIST.push(fish);
     TANK.appendChild(img);
 }
 
 for (let i = 0; i < NUM_FISH; i++) {
     createFish();
-    console.log("Fish created");
 }
 
 function animate() {
-    FISH_LIST.forEach(f => {
-        f.x += f.vx * f.speed;
-        f.y += f.vy * f.speed;
+    FISH_LIST.forEach(fish => {
 
-        if (f.x < 0) {
-            f.x = 0;
-            f.vx = 1;
-        }
-        if (f.x + 150 > TANK_W) {
-            f.x = TANK_W - 150;
-            f.vx = -1;
-        }
-        if (f.y < 0) {
-            f.y = 0;
-            f.vy = Math.abs(f.vy);
-        }
-        if (f.y + 100 > TANK_H) {
-            f.y = TANK_H - 100;
-            f.vy = -Math.abs(f.vy);
+        fish.x += fish.vx * fish.speed;
+        fish.y += fish.vy * fish.speed;
+
+        if (fish.x < 0) {
+            fish.x = 0;
+            fish.vx = 1;
+            faceDirection();
         }
 
-        f.img.style.left = f.x + "px";
-        f.img.style.top = f.y + "px";
+        if (fish.x + 150 > TANK_W) {
+            fish.x = TANK_W - 150;
+            fish.vx = -1;
+            faceDirection();
+        }
+
+        if (fish.y < 0) {
+            fish.y = 0;
+            if (fish.vy < 0) {
+                fish.vy = 1;
+            }
+        }
+
+        if (fish.y + 100 > TANK_H) {
+            fish.y = TANK_H - 100;
+            if (fish.vy > 0) {
+                fish.vy = -1;
+            }
+        }
+
+        fish.img.style.left = fish.x + "px";
+        fish.img.style.top = fish.y + "px";
     });
 
     requestAnimationFrame(animate);

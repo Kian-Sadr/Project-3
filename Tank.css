@@ -12,7 +12,7 @@ h1 {
     width: 800px;
     height: 600px;
     margin: 0 auto;
-    border: 5px solid #fff;
+    border: 15px solid #fff;
 
     background: linear-gradient(135deg, blue, aqua);
     overflow: hidden;
